@@ -1,0 +1,18 @@
+{
+    "register": "Registro",
+    "btn": {
+      "submit": "Ingreser",
+      "reset": "Limpiar",
+      "dont_have_account":"¿No tenés cuenta?",
+      "create_account ":" Crear cuenta "
+    },
+    "login": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "repeat_password": "Repetir contraseña",
+    "first_name": "Nombre",
+    "last_name": "Apellido",
+    "placeholder":{
+        "password":"Introducir contraseña"
+    }
+  }

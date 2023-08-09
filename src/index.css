@@ -1,0 +1,21 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+html{
+  height: 100vh;
+}
+body{
+  height: 100%;
+}
+
+#root{
+  height: 100%;
+}
+
+.btnTransladeDesktop{
+  min-width: 80px !important;
+ }
+ .isActive{
+  background-color:rgba(190, 215, 239,.5) !important;
+}

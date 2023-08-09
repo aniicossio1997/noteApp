@@ -1,0 +1,19 @@
+{
+    "register": "Register",
+    "btn": {
+      "submit": "Submit",
+      "reset": "Reset",
+      "dont_have_account":"¿Don't have an account?",
+      "create_account ":" Create account "
+    },
+    "login":"Login",
+    "email":"Email",
+    "password":"Password",
+    "repeat_password":"Repeat password",
+    "first_name":"First name",
+    "last_name": "Last name",
+    "placeholder":{
+        "password":"Enter password"
+    }
+}
+  

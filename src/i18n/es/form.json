@@ -8,6 +8,7 @@
     },
     "login": "Iniciar sesión",
     "email": "Correo electrónico",
+    "repeat_email":"Repetir email",
     "password": "Contraseña",
     "repeat_password": "Repetir contraseña",
     "first_name": "Nombre",

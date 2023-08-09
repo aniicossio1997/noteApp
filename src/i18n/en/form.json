@@ -8,6 +8,7 @@
     },
     "login":"Login",
     "email":"Email",
+    "repeat_email":"Repeat email",
     "password":"Password",
     "repeat_password":"Repeat password",
     "first_name":"First name",

@@ -19,3 +19,11 @@ body{
  .isActive{
   background-color:rgba(190, 215, 239,.5) !important;
 }
+.error{
+  color: #db5a5a;
+  font-size: 0.8rem;
+}
+input[aria-invalid="true"]:focus-visible {
+  border-color: #FC8181;
+  box-shadow: 0 0 0 1px #FC8181;
+}

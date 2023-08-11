@@ -15,5 +15,11 @@
     "last_name": "Apellido",
     "placeholder":{
         "password":"Introducir contraseña"
+    },
+    "validate":{
+      "required":"El campo es requerido",
+      "email":"el email debe tener un formato valido",
+      "password":"La contraseña debe ser como minimo 4 caracteres",
+      "repeat_password":"las contraseñas no coinciden"
     }
   }

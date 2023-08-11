@@ -1,32 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import { useNavigate } from "react-router-dom";
-import { Provider } from "@supabase/supabase-js";
 import { IUser } from "../models/User.model";
+import { FormikState } from "formik";
+import { ILogin } from "../models/ILogin";
 
-type SignInWithGoogleResult = Promise<
-  | {
-      provider: Provider;
-      url: string;
-    }
-  | {
-      provider: Provider;
-      url: null;
-    }
->;
-type SignInEmailPasswordResult =
-  | {
-      user: any;
-      session: any;
-    }
-  | {
-      user: null;
-      session: null;
-    };
+
 interface IProps {
   children: React.ReactNode;
 }
-
+type STATUS_SEND = "pedding" | "success" | "failed" | "none";
 // export const AuthContext=createContext<ISessionContext>({
 //   session: null,
 //   isLoggedIn: false,
@@ -40,6 +23,7 @@ interface IProps {
 export const AuthContext = createContext(undefined);
 export const AuthContextProvider = ({ children }: IProps) => {
   const [user, setUser] = useState<IUser>(undefined);
+  const [isLoading, setIsLoading] = useState<STATUS_SEND>("none");
 
   const navigate = useNavigate();
   async function signInWithGoogle() {
@@ -54,11 +38,12 @@ export const AuthContextProvider = ({ children }: IProps) => {
         },
       });
       if (error) {
-        setUser(undefined);
+        setIsLoading('failed')
         throw new Error("A ocurrido un error durante la autenticación");
       }
       return data;
     } catch (error) {
+      setIsLoading('failed')
       setUser(undefined);
     }
   }
@@ -74,21 +59,27 @@ export const AuthContextProvider = ({ children }: IProps) => {
       
   }
 
-  const signInEmailPassword = async (email: string, password: string) => {
+  const signInEmailPassword = async (valueForm:ILogin, resetForm: (nextState?: Partial<FormikState<ILogin>> | undefined) => void) => {
+    const {email,password}=valueForm;
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      console.log(valueForm)
+      const { data, error } = await  supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) {
         setUser(undefined);
+        setIsLoading('failed');
         throw new Error("A ocurrido un error durante la autenticación");
       }
-      console.log(data);
+      
       setUser({email:data.user.email,id:data.user.id});
+      resetForm()
+      navigate('/auth')
       return data;
     } catch (error) {
       setUser(undefined);
+      setIsLoading('failed')
       console.log(error);
     }
   };
@@ -104,6 +95,29 @@ export const AuthContextProvider = ({ children }: IProps) => {
       return data;
     } catch (error) {
       setUser(undefined);
+    }
+  }
+  
+  const register=async(email:string,password:string)=>{
+    try {
+      const { data: user, error } = await supabase.auth.signUp({
+        email,
+        password,
+        
+        options: {
+          data: {
+            full_name: 'new user',
+            confirmation_sent_at: Date.now(),
+          },
+   
+        }
+      })
+      if(error){
+        setIsLoading("failed")
+      }
+      return user;
+    } catch (error) {
+      setIsLoading("failed")
     }
   }
   
@@ -126,7 +140,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
   return (
     <>
       <AuthContext.Provider
-        value={{ signInWithGoogle, signOut, signInEmailPassword, signInWithFacebook,user }}
+        value={{ signInWithGoogle, signOut, signInEmailPassword, signInWithFacebook,user ,isLoading,register}}
       >
         {children}
       </AuthContext.Provider>

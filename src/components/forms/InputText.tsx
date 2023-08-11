@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, FieldProps } from "formik";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import i18n from "../../i18n/config";
 
 interface Props {
   label: string | React.ReactNode;
@@ -18,6 +19,10 @@ interface Props {
   type?: "text" | "email" | "textarea";
   placeholder?: string;
   Component: React.ElementType;
+}
+const traductor=(translationKey:string)=>{
+  const errorMessage = i18n.t(translationKey, { defaultValue: "Invalid password" });
+  return errorMessage
 }
 
 export const InputText = ({
@@ -41,7 +46,7 @@ export const InputText = ({
               placeholder={placeholder}
               {...props}
             />
-            <FormErrorMessage> {meta.error}</FormErrorMessage>
+            <FormErrorMessage> {traductor(meta.error)}</FormErrorMessage>
           </FormControl>
         )}
       </Field>
@@ -63,11 +68,13 @@ export const InputPassword = ({
   
   ...props
 }: IProps) => {
+
   const [show, setShow] = useState(false);
 
   const handleClick = () => {
     setShow(!show);
   };
+
   return (
     <Box mb={5}>
       <Field name={name}>
@@ -103,7 +110,7 @@ export const InputPassword = ({
                   onClick={handleClick}
                 />
               </InputGroup>
-              <FormErrorMessage> {meta.error}</FormErrorMessage>
+              <FormErrorMessage> {traductor(meta.error)}</FormErrorMessage>
             </FormControl>
           </>
         )}

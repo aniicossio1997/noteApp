@@ -5,20 +5,22 @@ import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { InputPassword, InputText } from "../../components/forms/InputText";
 import { IValueForm, initialValueForm } from "../utils/form.utils";
+import { UserAuth } from "../../context/AuthContext";
 
 export const RegisterPage = () => {
   const { t } = useTranslation("form");
+  const { register } = UserAuth();
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string()
-      .email("validation_inputs.email.invalid")
-      .required("validation_inputs.email.required"),
+      .email("form:validate.email")
+      .required("form:validate.required"),
     password: Yup.string()
-      .required("Campo obligatorio")
-      .min(4, "La contraseña debe tener al menos 4 caracteres"),
+      .required("form:validate.required")
+      .min(6, "form:validate.password"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Las contraseñas deben coincidir")
-      .required("Campo obligatorio"), // Agrega validación de campo obligatorio
+      .oneOf([Yup.ref("password"), null], "form:validate.repeat_password")
+      .required("form:validate.required"), // Agrega validación de campo obligatorio
   });
 
   return (
@@ -26,9 +28,16 @@ export const RegisterPage = () => {
       <AuthLayout title={t("form:register")}>
         <Formik
           initialValues={initialValueForm}
-          onSubmit={(values) => {
+          onSubmit={(values,actions) => {
             // Handle form submission
             console.log(values);
+            const {email,password}=values;
+            setTimeout(() => {
+            
+            register(email,password);
+            actions.setSubmitting(false);
+            
+            }, 1000);
           }}
           validationSchema={SignupSchema}
         >
@@ -48,7 +57,7 @@ export const RegisterPage = () => {
               />
 
               <InputPassword
-                label={t("form:repeat_email")}
+                label={t("form:repeat_password")}
                 name="confirmPassword"
                 placeholder={t("form:placeholder.password")}
               />
@@ -62,6 +71,7 @@ export const RegisterPage = () => {
                   colorScheme="teal"
                   isLoading={props.isSubmitting}
                   type="submit"
+                  
                 >
                   {t("form:btn.create_account ")}
                 </Button>

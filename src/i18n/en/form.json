@@ -14,7 +14,14 @@
     "first_name":"First name",
     "last_name": "Last name",
     "placeholder":{
-        "password":"Enter password"
+        "password":"Enter password",
+        "email":"Enter email"
+    },
+    "validate":{
+      "required":"Field is required",
+      "email":"The email doesn't have a valid format",
+      "password":"The password must be at least 4 characters",
+      "repeat_password":"Passwords do not match"
     }
 }
   

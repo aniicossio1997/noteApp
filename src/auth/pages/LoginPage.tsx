@@ -1,35 +1,34 @@
-import {
-  Button, Input, Text
-} from "@chakra-ui/react";
+import { Input, Text } from "@chakra-ui/react";
 import { Form, Formik, FormikProps } from "formik";
-import React from "react";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { useTranslation } from "react-i18next";
 import { UserAuth } from "../../context/AuthContext";
 import { InputPassword, InputText } from "../../components/forms/InputText";
 import * as Yup from "yup";
-
+import { BtnLayout } from "../layouts/BtnLayout";
+import { BtnGoogle } from "../components/BtnGoogle";
 export const LoginPage = () => {
-  const { signInWithGoogle,signInWithFacebook,signInEmailPassword,isLoading } = UserAuth();
+  const { signInEmailPassword, isLoading, resetIsLoading } = UserAuth();
 
   const { t } = useTranslation("form");
   const SignupSchema = Yup.object().shape({
     email: Yup.string()
       .email("form:validate.email")
       .required("form:validate.required"),
-    password: Yup.string()
-      .required("form:validate.required")
-      });
-
-
+    password: Yup.string().required("form:validate.required"),
+  });
+  const resetForm = (reset: () => void) => {
+    resetIsLoading();
+    reset();
+  };
   return (
     <>
       <AuthLayout title={t("form:login")}>
         <Formik
-          initialValues={{ email:'', password:'' }}
+          initialValues={{ email: "", password: "" }}
           onSubmit={(values, actions) => {
             setTimeout(() => {
-              signInEmailPassword(values,actions.resetForm)
+              signInEmailPassword(values, actions.resetForm);
               actions.setSubmitting(false);
             }, 1000);
           }}
@@ -37,21 +36,15 @@ export const LoginPage = () => {
         >
           {(
             props: FormikProps<{
-             
-              email:string;
-              password:string;
+              email: string;
+              password: string;
             }>
           ) => (
             <Form>
-              {
-                isLoading=='failed' && <Text color={"red.400"}>Error en el correo o contraseña</Text>
-              }
-        <Button onClick={signInWithGoogle}>Google</Button>
-
-
-              <Button my={3} mx={2} onClick={signInWithFacebook}>
-                Facebook
-              </Button>
+              <BtnGoogle my={"10px"} />
+              {isLoading == "failed" && (
+                <Text color={"red.400"}>{t("form:msj.error")}</Text>
+              )}
               <InputText
                 label={t("form:email")}
                 name={"email"}
@@ -65,15 +58,12 @@ export const LoginPage = () => {
                 placeholder={t("form:placeholder.password")}
               />
 
-              <Button
-                mt={4}
-                colorScheme="teal"
-                isLoading={props.isSubmitting}
-                type="submit"
-                
-              >
-                {t("form:btn.submit")}
-              </Button>
+              <BtnLayout
+                handleReset={() => resetForm(props.handleReset)}
+                isSubmitting={props.isSubmitting}
+                titleReset={t("form:btn.reset")}
+                titleSubmit={t("form:login")}
+              />
             </Form>
           )}
         </Formik>

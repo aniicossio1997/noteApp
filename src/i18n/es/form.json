@@ -4,7 +4,8 @@
       "submit": "Ingreser",
       "reset": "Limpiar",
       "dont_have_account":"¿No tenés cuenta?",
-      "create_account ":" Crear cuenta "
+      "create_account ":" Crear cuenta ",
+      "with_google":"Con "
     },
     "login": "Iniciar sesión",
     "email": "Correo electrónico",
@@ -19,7 +20,11 @@
     "validate":{
       "required":"El campo es requerido",
       "email":"el email debe tener un formato valido",
-      "password":"La contraseña debe ser como minimo 4 caracteres",
+      "password":"La contraseña debe ser como minimo 6 caracteres",
       "repeat_password":"las contraseñas no coinciden"
+    },
+    "msj":{
+      "error":"Error en el email o contraseña",
+      "register_error":"Parece que el email ya existe ó intente mas tarde"
     }
   }

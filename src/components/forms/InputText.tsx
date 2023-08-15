@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
+  
 } from "@chakra-ui/react";
 import { Field, FieldProps } from "formik";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -19,8 +20,9 @@ interface Props {
   type?: "text" | "email" | "textarea";
   placeholder?: string;
   Component: React.ElementType;
+ 
 }
-const traductor=(translationKey:string)=>{
+export const traductor=(translationKey:string)=>{
   const errorMessage = i18n.t(translationKey, { defaultValue: "Invalid password" });
   return errorMessage
 }
@@ -45,6 +47,7 @@ export const InputText = ({
               id={name}
               placeholder={placeholder}
               {...props}
+              onFocus={field.onBlur}
             />
             <FormErrorMessage> {traductor(meta.error)}</FormErrorMessage>
           </FormControl>
@@ -59,13 +62,13 @@ interface IProps {
   name: string;
   type?: "text" | "email" | "textarea";
   placeholder?: string;
-
+  children?:React.ReactNode
 }
 export const InputPassword = ({
   label,
   name,
   placeholder,
-  
+  children,
   ...props
 }: IProps) => {
 
@@ -75,13 +78,14 @@ export const InputPassword = ({
     setShow(!show);
   };
 
+
   return (
     <Box mb={5}>
       <Field name={name}>
         {({ field, meta }: FieldProps) => (
           <>
           <FormControl isInvalid={Boolean(meta.touched && meta.error)}>
-            <FormLabel htmlFor={name} fontSize={{ base: 16, md: 19 }}>
+            <FormLabel htmlFor={name} fontSize={{ base: 12, md: 13, lg:16 }}>
               {label}
             </FormLabel>
               <InputGroup>
@@ -92,6 +96,7 @@ export const InputPassword = ({
                   {...field}
               id={name}
               {...props}
+              onFocus={field.onBlur}
                 />
                 <InputRightAddon
                   cursor="pointer"
@@ -110,7 +115,8 @@ export const InputPassword = ({
                   onClick={handleClick}
                 />
               </InputGroup>
-              <FormErrorMessage> {traductor(meta.error)}</FormErrorMessage>
+              {(!meta.error && meta.value.length ==0) && children}
+              <FormErrorMessage >{traductor(meta.error)}</FormErrorMessage>
             </FormControl>
           </>
         )}

@@ -6,8 +6,8 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { BsChevronDown } from "react-icons/bs";
 import { useTranslateContext } from "../../context/TranslateContext";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 interface IProps extends MenuButtonProps {}
 export const TranslatorMenuDesktop = ({ ...rest }: IProps) => {
@@ -25,8 +25,7 @@ export const TranslatorMenuDesktop = ({ ...rest }: IProps) => {
       <>
             <MenuButton
              
-              as={Button}
-              rightIcon={<BsChevronDown />}
+             as={Button} rightIcon={<ChevronDownIcon />}
               boxSizing="border-box"
               borderRadius={0}
               textTransform="uppercase"

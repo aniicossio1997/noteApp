@@ -1,5 +1,5 @@
 import {
-  Box, Flex, Text, useMediaQuery
+  Box, Flex,  useMediaQuery
 } from "@chakra-ui/react";
 import React from "react";
 import { SidebarDesktop } from "../components/sidebar/SidebarDesktop";
@@ -25,7 +25,7 @@ export const JournalLayout = ({ children }: IProps) => {
         )}
         <Box minWidth="max-content" alignItems="center" flex="1" bg="tomato" flexGrow={isLargerThan ? undefined : "1"} >
           {children}
-          <Text></Text>
+          
         </Box>
       </Flex>
     </>

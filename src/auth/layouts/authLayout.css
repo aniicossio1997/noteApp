@@ -1,0 +1,46 @@
+.form{
+    max-width: 315px;
+    min-width: 315px;
+    box-sizing: border-box;
+    word-wrap: break-word; /* Rompe la palabra si no cabe en el ancho del contenedor */
+  overflow-wrap: break-word; /* Alternativa a word-wrap para un mejor soporte moderno */
+  white-space: normal; 
+}
+.btn-form{
+  border-width: 1px;
+  transition: all  0.3ms;
+  border-image-slice: 1;
+  border-width: 2px;
+  border-style: outset;
+  border-radius: 5px; /* Radio de borde de 5px */
+  transition: all .3s;
+}
+.btn-form:hover{
+  border-image: linear-gradient(45deg,  rgb(185, 11, 98), yellow, green, rgb(240, 29, 212), indigo);
+  border-image-slice: 1;
+  border-radius: 5px; /* Radio de borde de 5px */
+
+}
+
+@media (max-width: 950px) {
+  .btn-form{
+    padding-top: 2px  !important;
+    font-size: 14px !important;
+    line-height: 0px !important;
+    height: 29px !important;
+  }
+  .form {
+      max-width: 260px;
+      min-width: 260px;    }
+}
+
+@media (max-width: 600px) {
+    .form {
+        max-width: 215px;
+        min-width: 215px;
+    }
+    .btn-form{
+      padding: 2px 2px 2px 2px;
+      font-size: 12px;
+    }
+  }

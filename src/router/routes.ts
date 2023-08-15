@@ -3,21 +3,22 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { LoginPage } from "../auth/pages";
 
 const AuthPage = lazy(() => import("../auth/routes/AuthRoutes"));
-const NotePage = lazy(() => import("../journal/routes/JournalRoutes"));
+const JournalRoutes = lazy(() => import("../journal/routes/NoteRoutes"));
 
 export enum BRoutes {
   HOME_NOTE = "/note",
-  SIGNUP = "/auth/register",
-  LOGIN = "/auth/login",
+  AUTH="/auth",
+
 }
 
 const routes = [
   {
     path: "/note",
     type: "private",
-
-    element: NotePage,
+    hasSubroutes: true,
+    element: JournalRoutes,
   },
+
   {
     type: "guest",
     path: "/auth",
@@ -33,7 +34,6 @@ const routes = [
 
   {
     path: "*",
-    type: "any",
     title: "Página no encontrada",
     element: NotFoundPage,
   },

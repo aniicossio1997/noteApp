@@ -1,4 +1,4 @@
-import { Button, Flex, Input } from "@chakra-ui/react";
+import { Input, Text } from "@chakra-ui/react";
 import { Formik, Form, FormikProps } from "formik";
 import { AuthLayout } from "../layouts/AuthLayout";
 import { useTranslation } from "react-i18next";
@@ -6,10 +6,12 @@ import * as Yup from "yup";
 import { InputPassword, InputText } from "../../components/forms/InputText";
 import { IValueForm, initialValueForm } from "../utils/form.utils";
 import { UserAuth } from "../../context/AuthContext";
+import { BtnLayout } from "../layouts/BtnLayout";
+import { BtnGoogle } from "../components/BtnGoogle";
 
 export const RegisterPage = () => {
   const { t } = useTranslation("form");
-  const { register } = UserAuth();
+  const { register,isLoading,resetIsLoading } = UserAuth();
 
   const SignupSchema = Yup.object().shape({
     email: Yup.string()
@@ -22,7 +24,10 @@ export const RegisterPage = () => {
       .oneOf([Yup.ref("password"), null], "form:validate.repeat_password")
       .required("form:validate.required"), // Agrega validación de campo obligatorio
   });
-
+  const resetForm=(reset:()=>void, )=>{
+    resetIsLoading();
+    reset()
+  }
   return (
     <>
       <AuthLayout title={t("form:register")}>
@@ -43,6 +48,10 @@ export const RegisterPage = () => {
         >
           {(props: FormikProps<IValueForm>) => (
             <Form>
+              <BtnGoogle my={"10px"}/>
+              {isLoading == "failed" && (
+                <Text color={"red.400"}>{t("form:msj.register_error")}</Text>
+              )}
               <InputText
                 label={t("form:email")}
                 name={"email"}
@@ -54,28 +63,20 @@ export const RegisterPage = () => {
                 label={t("form:password")}
                 name="password"
                 placeholder={t("form:placeholder.password")}
-              />
+              >
+               <Text as='sup' color={"GrayText"}>* {t("form:validate.password")}</Text>
+              </InputPassword>
 
               <InputPassword
                 label={t("form:repeat_password")}
                 name="confirmPassword"
                 placeholder={t("form:placeholder.password")}
               />
-
-              <Flex justifyContent={"space-between"}>
-                <Button mt={4} variant={"solid"} onClick={props.handleReset}>
-                  reset
-                </Button>
-                <Button
-                  mt={4}
-                  colorScheme="teal"
-                  isLoading={props.isSubmitting}
-                  type="submit"
-                  
-                >
-                  {t("form:btn.create_account ")}
-                </Button>
-              </Flex>
+              <BtnLayout 
+              handleReset={()=>resetForm(props.handleReset)}
+              isSubmitting={props.isSubmitting}
+              titleReset={t("form:btn.reset")} titleSubmit= {t("form:btn.submit")} />
+            
             </Form>
           )}
         </Formik>

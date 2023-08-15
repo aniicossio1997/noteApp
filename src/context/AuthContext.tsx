@@ -1,31 +1,25 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import { useNavigate } from "react-router-dom";
-import { IUser } from "../models/User.model";
 import { FormikState } from "formik";
 import { ILogin } from "../models/ILogin";
+import { ModelUser } from "../models/ISessionData";
 
 
 interface IProps {
   children: React.ReactNode;
 }
 type STATUS_SEND = "pedding" | "success" | "failed" | "none";
-// export const AuthContext=createContext<ISessionContext>({
-//   session: null,
-//   isLoggedIn: false,
-//   initialize: () => {},
-//   destroy: () => {},
-//   signInWithGoogle: async () => {
-//     return { provider: null, url: null};
-//   },
-//   signout:() =>{}
-// });
+
 export const AuthContext = createContext(undefined);
 export const AuthContextProvider = ({ children }: IProps) => {
-  const [user, setUser] = useState<IUser>(undefined);
+  const [user, setUser] = useState<ModelUser>(undefined);
   const [isLoading, setIsLoading] = useState<STATUS_SEND>("none");
 
   const navigate = useNavigate();
+  const resetIsLoading=()=>{
+    setIsLoading("none")
+  }
   async function signInWithGoogle() {
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
@@ -73,7 +67,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
         throw new Error("A ocurrido un error durante la autenticación");
       }
       
-      setUser({email:data.user.email,id:data.user.id});
+      //setUser({email:data.user.email,id:data.user.id});
       resetForm()
       navigate('/auth')
       return data;
@@ -113,7 +107,10 @@ export const AuthContextProvider = ({ children }: IProps) => {
         }
       })
       if(error){
+        console.log(JSON.stringify(error))
         setIsLoading("failed")
+        throw new Error("A ocurrido un error durante la autenticación");
+
       }
       return user;
     } catch (error) {
@@ -123,24 +120,27 @@ export const AuthContextProvider = ({ children }: IProps) => {
   
 
    useEffect(() => {
-     const {data:authListener} =supabase.auth.onAuthStateChange(async(event,sesion)=>{
+    supabase.auth.onAuthStateChange(async(event,sesion)=>{
        //console.log("supabase event", event)
-       console.log("supabase session: ",sesion)
+      
        if(sesion!=null){
-         
-         setUser({email:sesion.user.email,id:sesion.user.id})
+       // console.log("sesion: ",sesion)
+        const userLogin=new ModelUser(sesion.user.id,sesion.user.user_metadata.full_name,
+          sesion.user.email,sesion.user.user_metadata.picture)
+       // console.log("user login: ",userLogin)
+          setUser(userLogin)
        }
        if(sesion===null){
         setUser(undefined)
        }
      })
-     console.log(authListener)
+     //console.log(authListener)
    }, [])
 
   return (
     <>
       <AuthContext.Provider
-        value={{ signInWithGoogle, signOut, signInEmailPassword, signInWithFacebook,user ,isLoading,register}}
+        value={{ signInWithGoogle, signOut, signInEmailPassword, signInWithFacebook,user ,isLoading,register,resetIsLoading}}
       >
         {children}
       </AuthContext.Provider>

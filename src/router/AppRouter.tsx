@@ -11,6 +11,7 @@ export const AppRouter = () => {
 
       {routes.map((route) => {
             const key = `${route.type}-${route.path}`;
+            console.log(`${route.path}${route.hasSubroutes ? '/*' : ''}`)
             return (
               <Route
                 path={`${route.path}${route.hasSubroutes ? '/*' : ''}`}
@@ -33,8 +34,7 @@ const Fallback = () => (
 );
 function RouteProtection({ type, element }: { type: string; element: ReactElement; }) {
   const { user } = UserAuth();
-  console.log("user sesion?",user)
-  if (type == 'private' && !user) return <Navigate to={BRoutes.LOGIN} replace />;
+  if (type == 'private' && !user) return <Navigate to={BRoutes.AUTH} replace />;
   if (type == 'guest' && user) return <Navigate to={BRoutes.HOME_NOTE} replace />;
 
   return <>{element}</>;

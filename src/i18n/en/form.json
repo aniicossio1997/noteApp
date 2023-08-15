@@ -4,9 +4,10 @@
       "submit": "Submit",
       "reset": "Reset",
       "dont_have_account":"¿Don't have an account?",
-      "create_account ":" Create account "
+      "create_account ":" Create account ",
+      "with_google":"With "
     },
-    "login":"Login",
+    "login":"Log In",
     "email":"Email",
     "repeat_email":"Repeat email",
     "password":"Password",
@@ -20,8 +21,13 @@
     "validate":{
       "required":"Field is required",
       "email":"The email doesn't have a valid format",
-      "password":"The password must be at least 4 characters",
+      "password":"The password must be at least 6 characters",
       "repeat_password":"Passwords do not match"
+    },
+    "msj":{
+      "error":"Error in email or password",
+      "register_error":"It seems that the email already exists or try again later"
+
     }
 }
   

@@ -10,19 +10,18 @@ import {
   Link,
   Text,
   Button,
+  FlexProps,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import  { useState } from "react";
 import { IconType } from "react-icons";
-import {
-  FiMenu,
-  FiCalendar,
-  FiUser,
-  FiBriefcase,
-  FiSettings,
-} from "react-icons/fi";
+import { FiMenu,  FiBriefcase, FiSettings } from "react-icons/fi";
+import { AiOutlineFileText } from "react-icons/ai";
 import { UserAuth } from "../../../context/AuthContext";
+import { BsBoxArrowRight } from "react-icons/bs";
+import { IoIosAdd } from "react-icons/io";
 
-interface IPropsNavItem {
+
+interface IPropsNavItem  extends FlexProps{
   icon: IconType;
   title: string;
   active?: boolean;
@@ -33,28 +32,26 @@ export const NavItem = ({
   title,
   active = false,
   navSize,
+  ...rest
 }: IPropsNavItem) => (
   <Flex
     mt={30}
     flexDir="column"
     w="100%"
     alignItems={navSize == "small" ? "center" : "flex-start"}
+    {...rest}
   >
-    <Menu placement="right">
+    <Menu placement="right" >
       <Link
-        backgroundColor={active && "#AEC8CA"}
+        backgroundColor={active && "rgba(255,255,255,.4)"}
         p={3}
         borderRadius={8}
-        _hover={{ textDecor: "none", backgroundColor: "#AEC8CA" }}
+        _hover={{ textDecor: "none", backgroundColor: "rgba(255,255,255,0.4)" }}
         w={navSize == "large" && "100%"}
       >
         <MenuButton w="100%">
           <Flex>
-            <Icon
-              as={icon}
-              fontSize="xl"
-              color={active ? "#82AAAD" : "gray.500"}
-            />
+            <Icon as={icon} fontSize="xl" />
             <Text ml={5} display={navSize == "small" ? "none" : "flex"}>
               {title}
             </Text>
@@ -102,8 +99,14 @@ export const SidebarDesktop = () => {
               else changeNavSize("small");
             }}
           />
-          <NavItem navSize={navSize} icon={FiCalendar} title="Inicio" active />
-          <NavItem navSize={navSize} icon={FiUser} title="+add" />
+          <NavItem navSize={navSize} icon={IoIosAdd} title="New Note" borderWidth={1}
+    borderRadius={10} />
+          <NavItem
+            navSize={navSize}
+            icon={AiOutlineFileText}
+            title="Inicio"
+            active
+          />
           <NavItem navSize={navSize} icon={FiBriefcase} title="Listado" />
           <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
         </Flex>
@@ -117,21 +120,39 @@ export const SidebarDesktop = () => {
           transition={"all 0.1s"}
         >
           <Divider display={navSize == "small" ? "none" : "flex"} />
-          <Flex mt={4} align="center">
-            <Avatar size="sm" src="avatar-1.jpg" />
+          <Flex mt={4} flexDirection={"column"}>
             <Flex
               transition={"all 0.1s"}
               flexDir="column"
               ml={4}
               display={navSize == "small" ? "none" : "flex"}
               cursor={"pointer"}
-              
             >
+              <Avatar bg="teal.500" />
               <Heading as="h3" size="sm">
                 Sylwia Weller
               </Heading>
-              <Button color="gray" onClick={signOut}>Salir</Button>
             </Flex>
+            {navSize == "small" ? (
+              <IconButton
+           
+                aria-label="exit"
+                size="lg"
+                backgroundColor="red.400"
+                onClick={signOut}
+                icon={<Icon as={BsBoxArrowRight} />}
+              />
+            ) : (
+              <Button
+                size="md"
+                width={"80px"}
+                paddingX={"0"}
+                mt={"10px"}
+                backgroundColor="red.400"
+                onClick={signOut}
+                leftIcon={<Icon as={BsBoxArrowRight} />}
+              >Salir</Button>
+            )}
           </Flex>
         </Flex>
       </Flex>

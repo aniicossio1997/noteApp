@@ -65,7 +65,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
   };
   async function signInWithGoogle() {
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const {data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           queryParams: {
@@ -78,7 +78,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
         setIsLoading("failed");
         throw new Error("A ocurrido un error durante la autenticación");
       }
-      //return data;
+      return data;
     } catch (error) {
       setIsLoading("failed");
       setUser(undefined);
@@ -114,7 +114,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
 
       //setUser({email:data.user.email,id:data.user.id});
       resetForm();
-      navigate("/auth");
+      navigate("/note");
       //return data;
     } catch (error) {
       setUser(undefined);

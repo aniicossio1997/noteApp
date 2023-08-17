@@ -130,6 +130,8 @@ export const SidebarDesktop = ({navSize,changeNavSize}:IPropsSidebar) => {
               leftIcon={<AddIcon boxSize={3} />}
               width={"100%"}
               justifyContent={"left"}
+              as={LinkRouter}
+              to={'/note/create'}
             >
               New note
             </Button>

@@ -10,7 +10,8 @@ const breakpoints = {
 }
 const config: ThemeConfig = {
     initialColorMode: 'dark', // 'dark' | 'light'
-    useSystemColorMode: true,
+    useSystemColorMode: false,
+
   }
 // 3. extend the theme
 const theme = extendTheme({ config, breakpoints,

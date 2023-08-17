@@ -39,8 +39,10 @@ export const NoteView = () => {
           boxSizing="border-box"
           pb={5}
           overflow={"auto"}
-          maxWidth={{ base: undefined, md: "630px", xl: "890px" }}
           className="container-text scrollbar doblado "
+
+          maxWidth={{ base: undefined, md: "630px", xl: "890px" }}
+          width={"90%"}
         >
           <Text
             whiteSpace={"normal"}
@@ -48,6 +50,7 @@ export const NoteView = () => {
             textAlign={"justify"}
             padding={"20px"}
             borderRadius={"5px"}
+            className="lined-words"
             
           >
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita
@@ -65,12 +68,9 @@ export const NoteView = () => {
             ducimus sed dolorum laboriosam, quas, obcaecati molestiae velit nam
             ipsum voluptate nemo eaque. Magnam accusantium similique delectus,
             labore expedita culpa neque praesentium aliquam unde hic impedit a
-            repudiandae. Natus libero earum nulla similique fugit velit
-            adipisci, fugiat commodi quas rerum expedita! Nostrum, laborum.
-            voluptate dolorem eius cum dolores obcaecati corporis velit nulla
-            amet officiis, maxime cupiditate iusto sed pariatur molestiae
-     
-             FIN
+            repudiandae. Natus libero earum nulla similique fugit velit 
+            
+            FIN
           </Text>
         </Container>
       </Flex>

@@ -1,0 +1,7 @@
+.text-break{
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: clip;
+    width: 180px;
+}

@@ -1,22 +1,21 @@
-import {   Navigate, Route, Routes } from "react-router-dom";
-import { HomePage } from "../pages/HomePage";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { JournalLayout } from "../layout/JournalLayout";
-import { NoteView } from "../views";
+import { NoteView, NothingSelectedView } from "../views";
 
 const NoteRoutes = () => {
   return (
     <>
-    <JournalLayout>
-hello- text
-<br/>
-<Routes>
-      <Route path='/:id' element={<NoteView/> }  />
-      <Route path='' element={<HomePage/>} />
-      <Route path='/*' element={<Navigate to={"/note/:id"} /> } />
-      
-   </Routes>
-    </JournalLayout>
+      <JournalLayout>
+        <Routes>
+        <Route path="" element={<NothingSelectedView />} />
+          <Route path=":id" element={<NoteView />} />
+         
+          <Route path='*' element={<Navigate to={"/note"} /> } />
 
+        </Routes>
+        <Outlet/>
+      </JournalLayout>
+      
     </>
   );
 };

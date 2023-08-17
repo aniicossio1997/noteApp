@@ -2,8 +2,7 @@
 export const HomePage = () => {
   return (
     <>
-   
-      he
+   HOME PAGUE
     </>
   )
 }

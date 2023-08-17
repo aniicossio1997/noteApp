@@ -3,10 +3,11 @@
   padding: 0;
 }
 html{
-  height: 100vh;
 }
 body{
   height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 #root{
@@ -26,4 +27,60 @@ body{
 input[aria-invalid="true"]:focus-visible {
   border-color: #FC8181;
   box-shadow: 0 0 0 1px #FC8181;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+
+/* Estilos para WebKit (Safari y navegadores basados en Chromium) */
+.scrollbar {
+  scrollbar-width: thin; /* Ancho de la barra de desplazamiento */
+  scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.2); /* Color de la barra y del fondo de la pista */
+}
+
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Estilos para Gecko (Firefox) */
+@-moz-document url-prefix() {
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+
+  .scrollbar {
+    width: 8px;
+    border-radius: 10px;
+  }
+
+  .scrollbar::-moz-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+
+  .scrollbar::-moz-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+  }
+
+  .scrollbar::-moz-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
 }

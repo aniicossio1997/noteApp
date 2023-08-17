@@ -9,15 +9,17 @@ export const AppRouter = () => {
   return (
     <Routes>
 
-      {routes.map((route) => {
+      {routes.map((route,index) => {
             const key = `${route.type}-${route.path}`;
-            console.log(`${route.path}${route.hasSubroutes ? '/*' : ''}`)
+           
             return (
               <Route
                 path={`${route.path}${route.hasSubroutes ? '/*' : ''}`}
-                key={key}
+                key={index+key}
                 element={
-                  <RouteProtection type={route.type}  element={<Suspense fallback={<Fallback />}>{<route.element/>}</Suspense>} />
+                  <RouteProtection 
+                 
+                  type={route.type}  element={<Suspense fallback={<Fallback />}>{<route.element/>}</Suspense>} />
                 }
               />
             );
@@ -32,10 +34,11 @@ const Fallback = () => (
     <Spinner mt={5} size='xl' color='primary.400' boxSize={['50px', 100]} />
   </Flex>
 );
-function RouteProtection({ type, element }: { type: string; element: ReactElement; }) {
+function RouteProtection({ type, element, }: { type: string; element: ReactElement;}) {
   const { user } = UserAuth();
-  if (type == 'private' && !user) return <Navigate to={BRoutes.AUTH} replace />;
-  if (type == 'guest' && user) return <Navigate to={BRoutes.HOME_NOTE} replace />;
 
-  return <>{element}</>;
+  if (type == 'private' && !user) return <Navigate to={BRoutes.AUTH} replace />;
+  if (type == 'guest' && user) return <Navigate to={'/note'} replace />;
+
+  return element;
 }

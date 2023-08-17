@@ -3,9 +3,9 @@ import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
 
 const breakpoints = {
   sm: '320px',
-  md: '610px',
+  md: '620px',
   lg: '960px',
-  xl: '1200px',
+  xl: '1190px',
   '2xl': '1536px',
 }
 const config: ThemeConfig = {

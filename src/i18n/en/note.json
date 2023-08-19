@@ -1,3 +1,24 @@
 {
-    "nothing_selected":"Nothing selected, select or create a note"
+    "nothing_selected":"Nothing selected, select or create a note",
+    "title":"Title",
+    "description":"description",
+
+    "placehorder":{
+        "title":"Enter a title",
+        "description":"Enter a description"
+        
+    },
+    "optional":"optional",
+    "message":{
+        "cancel_save":"The note will not be saved",
+        "confirmation_delete":"Are you sure to delete the note?"
+
+    },
+    "btn":{
+        "save":"Save",
+        "delete":"Delete",
+        "cancel":"Cancel",
+        "leave": "Go out",
+        "sign_out":"sign out"
+    }
 }

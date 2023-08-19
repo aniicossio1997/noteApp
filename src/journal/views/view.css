@@ -1,35 +1,24 @@
 .doblado {
-  background: none repeat scroll 0 0 #9f9bad;
-  color: #FFFFFF;
+  background: none repeat scroll 0 0 #9f9bad; /* color de fondo */
+  color: #FFFFFF; /* color de texto */
   margin: 0.99em auto;
   overflow: hidden;
   padding: 1em 1.5em;
   position: relative;
 }
 
-.doblado::before,
-.doblado::after {
-  background: none repeat scroll 0 0 #bedf87;
-  border-color: #8b246f #f3d2e1 #8b246f #f3d2e1;
-  border-style: solid;
-  display: block;
-  content: "";
-  position: absolute;
-  width: 0;
-}
-
 .doblado::before {
   -moz-box-shadow: 0 1px 1px rgba(221, 208, 208, 0.692), -1px 1px 1px rgba(201, 195, 195, 0.856);
+  background: none repeat scroll 0 0 #bedf87; /* color esquina */
+  border-color: #FFFFFF #f3d2e1 #8b246f; /* color de borde */
+  border-style: solid;
   border-width: 0 25px 20px 0;
+  content: "";
+  display: block;
+  position: absolute;
   right: 0;
   top: 0;
-}
-
-.doblado::after {
-  -moz-box-shadow: 0 -1px 1px rgba(221, 208, 208, 0.692), 1px -1px 1px rgba(201, 195, 195, 0.856);
-  border-width: 20px 0 0 25px;
-  bottom: 0;
-  left: 0;
+  width: 0;
 }
 
 
@@ -68,3 +57,11 @@
 
   }
 
+/* input:focus,  textarea:focus{
+  background-color: #e0dcdf;
+  color: #636060;
+} */
+
+input:focus::placeholder, textarea:focus::placeholder{
+color: #8e979e;
+}

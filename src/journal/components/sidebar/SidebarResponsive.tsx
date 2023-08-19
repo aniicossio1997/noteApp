@@ -21,9 +21,7 @@ import { NavItem } from "./SidebarDesktop";
 import {
     
     FiCalendar,
-    FiUser,
-    FiBriefcase,
-    FiSettings,
+
     FiMenu,
   } from "react-icons/fi";
 import {BsBoxArrowInRight} from "react-icons/bs"
@@ -32,9 +30,9 @@ export const SidebarResponsive = () => {
   const btnRef = React.useRef<HTMLButtonElement>(null);
   return (
     <>
-      <Flex minWidth="max-content" alignItems="center" gap="2" paddingX={"5px"}>
+      <Flex minWidth="max-content" alignItems="center" gap="2" paddingX={"5px"} backgroundColor={"blackAlpha.500"}>
         <Box p="2">
-          <Heading size="md">Chakra App</Heading>
+          <Heading size="md">NoteApp</Heading>
         </Box>
         <Spacer />
         <ButtonGroup gap="2">
@@ -53,10 +51,8 @@ export const SidebarResponsive = () => {
           <DrawerCloseButton />
           <DrawerHeader>Account</DrawerHeader>
           <DrawerBody>
-          <NavItem navSize={"large"} icon={FiCalendar} title="Inicio" active />
-          <NavItem navSize={"large"} icon={FiUser} title="+add" />
-          <NavItem navSize={"large"} icon={FiBriefcase} title="Listado" />
-          <NavItem navSize={"large"} icon={FiSettings} title="Settings" />
+          <NavItem navSize={"large"} icon={FiCalendar} title="Inicio" active to="/note/1" />
+
           </DrawerBody>
           <DrawerFooter borderTopWidth='1px' justifyContent={"left"}>
           <Button leftIcon={<BsBoxArrowInRight />} colorScheme='telegram' variant='solid'>

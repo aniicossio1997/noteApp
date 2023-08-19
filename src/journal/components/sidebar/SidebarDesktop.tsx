@@ -11,6 +11,7 @@ import {
   Text,
   Button,
   LinkProps,
+  Box,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IconType } from "react-icons";
@@ -175,12 +176,12 @@ className="scrollbar"
           p="5%"
           flexDir="column"
           w="100%"
-          alignItems={navSize == "small" ? "center" : "flex-start"}
+          alignItems={ "flex-start"}
           mb={4}
           transition={"all 0.1s"}
           marginBottom={"calc(100vh - 244px)"}
         >
-          <Divider display={navSize == "small" ? "none" : "flex"} />
+          <Divider display={"flex"} />
           <Flex mt={4} flexDirection={"column"}>
             <Flex
               transition={"all 0.1s"}
@@ -189,7 +190,7 @@ className="scrollbar"
               alignItems={"center"}
               gap={"10px"}
               ml={4}
-              display={navSize == "small" ? "none" : "flex"}
+              display={"flex"}
               marginLeft={"-1px"}
             >
               <Avatar bg="teal.500" />

@@ -12,7 +12,7 @@ export const NoteView = () => {
         style={{ width: "100%" }}
         overflow={"hidden"}
       >
-        <Flex p="2" backgroundColor={"#161b25"}>
+        <Flex p="2" backgroundColor={"#612a5233"}>
           <Heading
             flexGrow={1}
             flexShrink={1}

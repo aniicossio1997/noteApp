@@ -34,7 +34,7 @@ export const DialogModal = ({confirmationRef,isOpen,onClose,onConfirm,onModalAct
         leastDestructiveRef={cancelRef}
         onClose={onClose}
         isOpen={isOpen}
-        
+        closeOnOverlayClick={false}
       >
         <AlertDialogOverlay />
 

@@ -31,7 +31,6 @@ export const CreateNote = () => {
   const NoteSchema = Yup.object().shape({
     title: Yup.string().required("form:validate.required"),
   });
-  const confirmationButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const resetForm = (reset: () => void) => {
     reset();
@@ -51,16 +50,18 @@ export const CreateNote = () => {
 
   return (
     <>
-      {useModal.render(onModalAction)}
+     
 
       <Flex
         flexDirection={"column"}
         overflow={"auto"}
         height={"calc(100vh - 5px)"}
-        w={"100%"}
+        w={"95%"}
         position={"relative"}
-        pt={5}
+       mt={5}
+       
       >
+         {useModal.render(onModalAction)}
         <Center>
           <Formik
             initialValues={{ title: "", description: "" }}
@@ -73,7 +74,7 @@ export const CreateNote = () => {
             validationSchema={NoteSchema}
           >
             {(dataForm: FormikProps<IFormNote>) => (
-              <Form style={{ width: "95%" }}>
+              <Form style={{ width: "90%" }}>
                 <Flex
                   width={"100%"}
                   marginLeft={2}

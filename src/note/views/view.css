@@ -58,6 +58,7 @@ white-space: normal;
     .container-text >*{
         font-size: 0.9rem;
       }
+      
   }
   /* Estilos para pantallas con ancho de 780px y altura de 619px */
 @media (max-width: 1100px) and (max-height: 650px) {
@@ -84,10 +85,23 @@ color: #434d61 !important;
 }
 textarea{
   resize: vertical;
-  max-height: 200px; /* Ajusta este valor según tus necesidades */
+  height: 210px  !important;
+  max-height: 350px; /* Ajusta este valor según tus necesidades */
   width: 100% !important;
 }
 input{
   font-weight: 500;
   
+}
+
+@media (max-width: 580px) {
+
+  /* Aquí puedes definir los estilos que deseas aplicar cuando la pantalla sea más pequeña */
+  /* Por ejemplo, cambiar la altura de un elemento */
+  .container-text >*{
+      font-size: 0.9rem;
+    }
+    section[role="alertdialog"]{
+      width: 90% !important;
+    }
 }

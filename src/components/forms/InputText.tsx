@@ -8,7 +8,6 @@ import {
   Input,
   InputGroup,
   InputRightAddon,
-  
 } from "@chakra-ui/react";
 import { Field, FieldProps } from "formik";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -20,12 +19,11 @@ interface Props {
   type?: "text" | "email" | "textarea";
   placeholder?: string;
   Component: React.ElementType;
- 
 }
-export const traductor=(translationKey:string)=>{
-  const errorMessage = i18n.t(translationKey, { defaultValue: "Invalid password" });
-  return errorMessage
-}
+export const traductor = (translationKey: string) => {
+  const errorMessage = i18n.t(translationKey, { defaultValue: "Invalid" });
+  return errorMessage;
+};
 
 export const InputText = ({
   label,
@@ -62,7 +60,7 @@ interface IProps {
   name: string;
   type?: "text" | "email" | "textarea";
   placeholder?: string;
-  children?:React.ReactNode
+  children?: React.ReactNode;
 }
 export const InputPassword = ({
   label,
@@ -71,32 +69,30 @@ export const InputPassword = ({
   children,
   ...props
 }: IProps) => {
-
   const [show, setShow] = useState(false);
 
   const handleClick = () => {
     setShow(!show);
   };
 
-
   return (
     <Box mb={5}>
       <Field name={name}>
         {({ field, meta }: FieldProps) => (
           <>
-          <FormControl isInvalid={Boolean(meta.touched && meta.error)}>
-            <FormLabel htmlFor={name} fontSize={{ base: 12, md: 13, lg:16 }}>
-              {label}
-            </FormLabel>
+            <FormControl isInvalid={Boolean(meta.touched && meta.error)}>
+              <FormLabel htmlFor={name} fontSize={{ base: 12, md: 13, lg: 16 }}>
+                {label}
+              </FormLabel>
               <InputGroup>
                 <Input
-                name={name}
+                  name={name}
                   type={show ? "text" : "password"}
                   placeholder={show ? placeholder : "******"}
                   {...field}
-              id={name}
-              {...props}
-              onFocus={field.onBlur}
+                  id={name}
+                  {...props}
+                  onFocus={field.onBlur}
                 />
                 <InputRightAddon
                   cursor="pointer"
@@ -115,10 +111,46 @@ export const InputPassword = ({
                   onClick={handleClick}
                 />
               </InputGroup>
-              {(!meta.error && meta.value.length ==0) && children}
-              <FormErrorMessage >{traductor(meta.error)}</FormErrorMessage>
+              {!meta.error && meta.value.length == 0 && children}
+              <FormErrorMessage>{traductor(meta.error)}</FormErrorMessage>
             </FormControl>
           </>
+        )}
+      </Field>
+    </Box>
+  );
+};
+
+interface IPropsNoteForm {
+  name: string;
+  placeholder: string;
+  Component: React.ElementType;
+  children?: React.ReactNode;
+}
+
+export const InputTextNote = ({
+  name,
+  placeholder,
+  Component,
+  children,
+  ...props
+}: IPropsNoteForm) => {
+  return (
+    <Box mb={5} width={"85%"}>
+      <Field name={name}>
+        {({ field, meta }: FieldProps) => (
+          <FormControl isInvalid={Boolean(meta.touched &&meta.error)}>
+            <FormErrorMessage style={{marginBottom:'3px'}}> {traductor(meta.error)}</FormErrorMessage>
+            <Component
+              {...field}
+              id={name}
+              {...props}
+              placeholder={placeholder}
+            />
+            {Boolean(meta.touched &&meta.error)==false && children}
+
+            
+          </FormControl>
         )}
       </Field>
     </Box>

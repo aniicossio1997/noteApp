@@ -30,7 +30,7 @@ export const SidebarResponsive = () => {
   const btnRef = React.useRef<HTMLButtonElement>(null);
   return (
     <>
-      <Flex minWidth="max-content" alignItems="center" gap="2" paddingX={"5px"} backgroundColor={"blackAlpha.500"}>
+      <Flex minWidth="max-content" alignItems="center" gap="2" paddingX={"15px"} backgroundColor={"blackAlpha.500"}>
         <Box p="2">
           <Heading size="md">NoteApp</Heading>
         </Box>

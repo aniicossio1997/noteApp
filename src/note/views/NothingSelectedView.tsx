@@ -1,6 +1,7 @@
-import { Center,  Icon, Text } from "@chakra-ui/react"
+import { Center,  Icon,  Text } from "@chakra-ui/react"
 import { useTranslation } from "react-i18next";
-import { AiOutlineStar } from "react-icons/ai"
+import { AiFillFileAdd} from "react-icons/ai"
+import { Link } from "react-router-dom";
 
 export const NothingSelectedView = () => {
   const { t } = useTranslation("note");
@@ -8,8 +9,13 @@ export const NothingSelectedView = () => {
   return (
     <>
     <Center width={"100%"}  flexDirection={"column"} h={"85vh"} justifyContent={"center"} >
-      <Icon as={AiOutlineStar} h={"4rem"} width={"4rem"}/>
+      <Link to={'/note/create'}>
+      <Icon as={AiFillFileAdd} h={"4rem"} width={"4rem"}/>
+      </Link>
+      
       <Text textAlign={"center"}>{t("note:nothing_selected")}</Text>
+     
+
     </Center>
     </>
   )

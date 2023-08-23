@@ -11,24 +11,25 @@ import {
   Text,
   Button,
   LinkProps,
-  Box,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IconType } from "react-icons";
-import { FiMenu } from "react-icons/fi";
 import { AiOutlineFileText } from "react-icons/ai";
 import { UserAuth } from "../../../context/AuthContext";
 import { BsBoxArrowRight } from "react-icons/bs";
-import {Link as LinkRouter, useLocation} from "react-router-dom"
+import { Link as LinkRouter, useLocation } from "react-router-dom";
 import { AddIcon } from "@chakra-ui/icons";
 
 import "./sidebar.css";
+import { useGetNotesByUserQuery } from "../../../redux/slice/noteSlice";
+import { INote } from "../../../models/INote";
+import { SkeletonComponent } from "../../../components/Skeleton/SkeletonComponent";
 interface IPropsNavItem extends LinkProps {
   icon: IconType;
   title: string;
   active?: boolean;
   navSize: string;
-  to:string
+  to: string;
 }
 export const NavItem = ({
   icon,
@@ -61,7 +62,11 @@ export const NavItem = ({
         <MenuButton w="100%">
           <Flex>
             <Icon as={icon} fontSize="xl" />
-            <Text ml={4} display={navSize == "small" ? "none" : "flex"} textTransform={"capitalize"}>
+            <Text
+              ml={4}
+              display={navSize == "small" ? "none" : "flex"}
+              textTransform={"capitalize"}
+            >
               {title}
             </Text>
           </Flex>
@@ -71,32 +76,39 @@ export const NavItem = ({
   </Flex>
 );
 
-interface IPropsSidebar{
-  navSize:string,
-  changeNavSize:(x:string)=>void
+interface IPropsSidebar {
+  navSize: string;
+ 
 }
 
-export const SidebarDesktop = ({navSize,changeNavSize}:IPropsSidebar) => {
+export const SidebarDesktop = ({ navSize }: IPropsSidebar) => {
   const { signOut, user } = UserAuth();
   const { pathname } = useLocation();
-  const [idNote, setIdNote] = useState<string>('')
-  
+  const [idNote, setIdNote] = useState<string>("");
+  const { isLoading, data, isFetching ,isError} = useGetNotesByUserQuery(user.id);
 
-  
+  const [notes, setNotes] = useState<INote[]>([]);
+
   useEffect(() => {
-    const  extractIdURL=(): string =>  {
-      const parts = pathname.split('/note/');      
+    const extractIdURL = (): string => {
+      const parts = pathname.split("/note/");
       if (parts.length === 2) {
         return parts[1];
       }
       return null;
+    };
+    setIdNote(extractIdURL());
+  }, [pathname]);
+  useEffect(() => {
+    if (!isFetching && !isLoading) {
+      setNotes(data);
     }
-    setIdNote(extractIdURL())
+  }, [isLoading, isFetching, data]);
 
-  }, [pathname])
+
+  if(isError) return <div>ups hubo un error</div>
   return (
     <>
-
       <Flex
         pos="sticky"
         left="0"
@@ -132,22 +144,14 @@ export const SidebarDesktop = ({navSize,changeNavSize}:IPropsSidebar) => {
               width={"100%"}
               justifyContent={"left"}
               as={LinkRouter}
-              to={'/note/create'}
+              to={"/note/create"}
             >
               New note
             </Button>
 
-            <IconButton
-              transition={"all 0.4ms"}
-              aria-label="btn"
-              _hover={{ background: "rgb(135 131 131 / 40%)" }}
-              icon={<FiMenu />}
-              onClick={() => {
-                if (navSize == "small") changeNavSize("large");
-                else changeNavSize("small");
-              }}
-              height={"40px"}
-            />
+
+
+            {/* <BtnMenuSidebar aria-label="menu sidebar" /> */}
           </Flex>
 
           <Flex
@@ -156,17 +160,18 @@ export const SidebarDesktop = ({navSize,changeNavSize}:IPropsSidebar) => {
             width={"100%"}
             height={"calc(100vh - 244px)"}
             paddingRight={"8px"}
-className="scrollbar"
+            className="scrollbar"
           >
-
-            {Array.from({ length: 3 }).map((_, index) => (
+        
+            <SkeletonComponent isLoading={isLoading} />
+            {notes.map((note) => (
               <NavItem
-                to={`/note/${index+1}`}
-                key={index}
+                to={`/note/${note.id}`}
+                key={note.id}
                 navSize={navSize}
                 icon={AiOutlineFileText}
-                title={`note ${index +1}`}
-                active={(index +1).toString()==idNote}
+                title={note.title}
+                active={note.id.toString() == idNote}
               />
             ))}
           </Flex>
@@ -176,7 +181,7 @@ className="scrollbar"
           p="5%"
           flexDir="column"
           w="100%"
-          alignItems={ "flex-start"}
+          alignItems={"flex-start"}
           mb={4}
           transition={"all 0.1s"}
           marginBottom={"calc(100vh - 244px)"}

@@ -3,7 +3,7 @@ import { NotFoundPage } from "../pages/NotFoundPage";
 import { LoginPage } from "../auth/pages";
 
 const AuthPage = lazy(() => import("../auth/routes/AuthRoutes"));
-const NoteRoutes = lazy(() => import("../journal/routes/NoteRoutes"));
+const NoteRoutes = lazy(() => import("../note/routes/NoteRoutes"));
 
 export enum BRoutes {
   AUTH="/auth",

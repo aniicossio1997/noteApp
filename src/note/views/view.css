@@ -21,7 +21,14 @@
   width: 0;
 }
 
-
+.form{
+  max-width: 450px;
+  min-width: 450px;
+  box-sizing: border-box;
+  word-wrap: break-word; /* Rompe la palabra si no cabe en el ancho del contenedor */
+overflow-wrap: break-word; /* Alternativa a word-wrap para un mejor soporte moderno */
+white-space: normal; 
+}
 
 .container-text {
     box-sizing: border-box;
@@ -61,7 +68,26 @@
   background-color: #e0dcdf;
   color: #636060;
 } */
-
+input,  textarea{
+  background-color: rgba(243, 243, 243, 0.925) !important;
+  border:1px solid #636363 !important;
+  border-radius: 3px !important;
+  color: #14161a;
+ 
+}
 input:focus::placeholder, textarea:focus::placeholder{
-color: #8e979e;
+color: #434d61 !important;
+}
+::placeholder{
+  color: #928f8f;
+  font-weight: normal;
+}
+textarea{
+  resize: vertical;
+  max-height: 200px; /* Ajusta este valor según tus necesidades */
+  width: 100% !important;
+}
+input{
+  font-weight: 500;
+  
 }

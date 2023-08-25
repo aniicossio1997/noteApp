@@ -62,11 +62,13 @@ export const AuthLayout = ({ title = "", children }: IProps) => {
         alignContent={"center"}
         justifyItems={"center"}
         alignItems={"center"}
-        h={"80%"}
+        h={"70vh"}
         
       >
         <Box borderWidth={1} p={4} borderRadius={5} className="form"
-        bg={"rgba(0,0,0,0.1)"}
+        bg={"var(--color-black)"}
+        backdropFilter={"blur(20px)"}
+        
         >
           <Heading as="h4" size="md" marginBottom={4} textAlign={"center"}>
             {title}

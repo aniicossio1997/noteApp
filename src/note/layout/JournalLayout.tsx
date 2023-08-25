@@ -1,4 +1,4 @@
-import { Box, Flex,  useMediaQuery } from "@chakra-ui/react";
+import { Box, Flex,  useMediaQuery, } from "@chakra-ui/react";
 import React from "react";
 import { SidebarDesktop } from "../components/sidebar/SidebarDesktop";
 import { SidebarResponsive } from "../components/sidebar/SidebarResponsive";
@@ -12,10 +12,10 @@ export const JournalLayout = ({ children }: IProps) => {
   const [isLargerThan] = useMediaQuery("(min-width: 640px)");
   const {navSize}= useNoteContext()
 
-
   
   return (
     <>
+    
       <Flex
         flexDirection={isLargerThan ? "row" : "column"}
        

@@ -1,13 +1,15 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { JournalLayout } from "../layout/JournalLayout";
 import { CreateNote, NoteView, NothingSelectedView } from "../views";
-import { ApiProvider } from "@reduxjs/toolkit/query/react";
-import { supabaseApi } from "../../redux/slice/noteSlice";
+
 import { NoteProvider } from "../../context/NoteContext";
+import { store } from "../../redux";
+import { Provider } from "react-redux";
+import "../views/mediaQuery.css"
 const NoteRoutes = () => {
   return (
     <>
-      <ApiProvider api={supabaseApi}>
+      <Provider   store={ store }>
         <NoteProvider>
           <JournalLayout>
             <Routes>
@@ -19,7 +21,7 @@ const NoteRoutes = () => {
             <Outlet />
           </JournalLayout>
         </NoteProvider>
-      </ApiProvider>
+      </Provider >
     </>
   );
 };

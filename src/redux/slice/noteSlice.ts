@@ -48,7 +48,7 @@ export const supabaseApi = createApi({
       }),
       getFullNoteByUser:builder.query({
         async queryFn(params:IParamFullNote) {
-          console.log(params)
+          
           const { note_id, user_id } = params;
           const {data, error} = await supabase
             .from('notes')

@@ -8,11 +8,11 @@
 }
 
 .doblado::before {
-  -moz-box-shadow: 0 1px 1px rgba(221, 208, 208, 0.692), -1px 1px 1px rgba(201, 195, 195, 0.856);
-  background: none repeat scroll 0 0 #bedf87; /* color esquina */
-  border-color: #FFFFFF #f3d2e1 #8b246f; /* color de borde */
+  -moz-box-shadow: 0 1px 1px rgba(255, 255, 255, 0), -1px 1px 1px rgba(201, 195, 195, 0.856);
+  background: none repeat scroll 0 0 #fffefe00;
+  border-color: #fff0 #ffffff12 #8b246f;
   border-style: solid;
-  border-width: 0 25px 20px 0;
+  border-width: 0 28px 18px 0;
   content: "";
   display: block;
   position: absolute;
@@ -37,12 +37,12 @@ white-space: normal;
      overflow: auto; /* Agrega desplazamiento vertical si es necesario */
      white-space: normal; /* Permite saltos de línea */
      word-wrap: break-word; /* Rompe las palabras si son demasiado largas */
-     border: 1px solid #612a52;
+    
      border-radius: 5px;
      height: auto;
      max-height:calc(100vh - 85px) !important; 
  
-     background-color: rgb(97, 42, 82,0.2); 
+     background-color: var(--color-black); 
      padding: 8px;  
     line-height: 1.5rem;
  
@@ -50,28 +50,12 @@ white-space: normal;
 .container-text >*{
      font-size: 1rem;
    }
-  /* Estilos para pantallas con un ancho menor a 780px */
-@media (max-width: 880px) {
 
-    /* Aquí puedes definir los estilos que deseas aplicar cuando la pantalla sea más pequeña */
-    /* Por ejemplo, cambiar la altura de un elemento */
-    .container-text >*{
-        font-size: 0.9rem;
-      }
-      
-  }
-  /* Estilos para pantallas con ancho de 780px y altura de 619px */
-@media (max-width: 1100px) and (max-height: 650px) {
 
-  }
 
-/* input:focus,  textarea:focus{
-  background-color: #e0dcdf;
-  color: #636060;
-} */
 input,  textarea{
   background-color: rgba(243, 243, 243, 0.925) !important;
-  border:1px solid #636363 !important;
+  
   border-radius: 3px !important;
   color: #14161a;
  
@@ -83,25 +67,19 @@ color: #434d61 !important;
   color: #928f8f;
   font-weight: normal;
 }
-textarea{
-  resize: vertical;
-  height: 210px  !important;
-  max-height: 350px; /* Ajusta este valor según tus necesidades */
-  width: 100% !important;
-}
+
 input{
   font-weight: 500;
   
 }
 
-@media (max-width: 580px) {
 
-  /* Aquí puedes definir los estilos que deseas aplicar cuando la pantalla sea más pequeña */
-  /* Por ejemplo, cambiar la altura de un elemento */
-  .container-text >*{
-      font-size: 0.9rem;
-    }
-    section[role="alertdialog"]{
-      width: 90% !important;
-    }
+.bar-nav{
+  
+    position: absolute !important;
+    width: 100% !important;
+    background-color:var(--color-black);;
+    height: 85px;
+    z-index: -1;
+
 }

@@ -126,6 +126,7 @@ interface IPropsNoteForm {
   placeholder: string;
   Component: React.ElementType;
   children?: React.ReactNode;
+  isDirty:boolean
 }
 
 export const InputTextNote = ({
@@ -133,13 +134,14 @@ export const InputTextNote = ({
   placeholder,
   Component,
   children,
+  isDirty,
   ...props
 }: IPropsNoteForm) => {
   return (
     <Box mb={5} width={"85%"}>
       <Field name={name}>
         {({ field, meta }: FieldProps) => (
-          <FormControl isInvalid={Boolean(meta.touched &&meta.error)}>
+          <FormControl isInvalid={Boolean(isDirty&&meta.error)}>
             <FormErrorMessage style={{marginBottom:'3px'}}> {traductor(meta.error)}</FormErrorMessage>
             <Component
               {...field}
@@ -147,7 +149,7 @@ export const InputTextNote = ({
               {...props}
               placeholder={placeholder}
             />
-            {Boolean(meta.touched &&meta.error)==false && children}
+            {Boolean(isDirty &&meta.error)==false && children}
 
             
           </FormControl>

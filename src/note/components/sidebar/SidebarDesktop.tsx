@@ -17,26 +17,27 @@ import { IconType } from "react-icons";
 import { AiOutlineFileText } from "react-icons/ai";
 import { UserAuth } from "../../../context/AuthContext";
 import { BsBoxArrowRight } from "react-icons/bs";
-import { Link as LinkRouter, useLocation } from "react-router-dom";
+import { Link as LinkRouter,  useLocation, useNavigate } from "react-router-dom";
 import { AddIcon } from "@chakra-ui/icons";
 
 import "./sidebar.css";
 import { useGetNotesByUserQuery } from "../../../redux/slice/noteSlice";
 import { INote } from "../../../models/INote";
 import { SkeletonComponent } from "../../../components/Skeleton/SkeletonComponent";
+import { useAlertDialog } from "../../hooks/useAlertDialog";
+import { useNoteContext } from "../../../context/NoteContext";
 interface IPropsNavItem extends LinkProps {
   icon: IconType;
   title: string;
   active?: boolean;
   navSize: string;
-  to: string;
+ 
 }
 export const NavItem = ({
   icon,
   title,
   active = false,
   navSize,
-  to,
   ...rest
 }: IPropsNavItem) => (
   <Flex
@@ -56,8 +57,8 @@ export const NavItem = ({
         }}
         w={navSize == "large" && "100%"}
         {...rest}
-        as={LinkRouter}
-        to={to}
+       
+        
       >
         <MenuButton w="100%">
           <Flex>
@@ -86,9 +87,28 @@ export const SidebarDesktop = ({ navSize }: IPropsSidebar) => {
   const { pathname } = useLocation();
   const [idNote, setIdNote] = useState<string>("");
   const { isLoading, data, isFetching ,isError} = useGetNotesByUserQuery(user.id);
-
+const  [noteNextId,setNoteNextId]=useState('')
   const [notes, setNotes] = useState<INote[]>([]);
+  const useModal = useAlertDialog();
+  const { isDirtyForm,setIsDirtyForm}=useNoteContext()
+  const navigate=useNavigate();
 
+const checkNoNote=(noteId:string)=>{
+  setNoteNextId(`/note/${noteId}`);
+  if (isDirtyForm) {
+    useModal.openCustonModal();
+  } else {
+    navigate(`/note/${noteId}`);
+  }
+console.log("desde sidebar: ",isDirtyForm)
+  
+}
+
+
+const changeRouter=()=>{
+  setIsDirtyForm(false)
+  navigate(noteNextId)
+}
   useEffect(() => {
     const extractIdURL = (): string => {
       const parts = pathname.split("/note/");
@@ -105,10 +125,13 @@ export const SidebarDesktop = ({ navSize }: IPropsSidebar) => {
     }
   }, [isLoading, isFetching, data]);
 
+  
+
 
   if(isError) return <div>ups hubo un error</div>
   return (
     <>
+     {useModal.render(changeRouter)}
       <Flex
         pos="sticky"
         left="0"
@@ -165,14 +188,18 @@ export const SidebarDesktop = ({ navSize }: IPropsSidebar) => {
         
             <SkeletonComponent isLoading={isLoading} />
             {notes.map((note) => (
-              <NavItem
-                to={`/note/${note.id}`}
-                key={note.id}
+              <div  key={note.id}  onClick={()=>checkNoNote(note.id)}>
+                              <NavItem
+                
+               
                 navSize={navSize}
                 icon={AiOutlineFileText}
                 title={note.title}
                 active={note.id.toString() == idNote}
+               
               />
+              </div>
+
             ))}
           </Flex>
         </Flex>

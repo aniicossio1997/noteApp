@@ -12,12 +12,15 @@ const checkUserAuth = () => {
   let userAux = new ModelUser("", "", "", "");
   if (isAuth) {
     supabase.auth.onAuthStateChange(async (event, sesion) => {
-      userAux = new ModelUser(
-        sesion.user.id,
-        sesion.user.user_metadata.full_name,
-        sesion.user.email,
-        sesion.user.user_metadata.picture
-      );
+      if (sesion) {
+        userAux = new ModelUser(
+          sesion.user.id,
+          sesion.user.user_metadata.full_name,
+          sesion.user.email,
+          sesion.user.user_metadata.picture
+        );
+      }
+      userAux = undefined;
     });
   } else {
     userAux = undefined;
@@ -65,7 +68,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
   };
   async function signInWithGoogle() {
     try {
-      const {data, error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
           queryParams: {
@@ -86,7 +89,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
   }
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    
+
     if (error) {
       throw new Error("A ocurrido un error durante el cierre de sesión");
     } else {
@@ -101,7 +104,6 @@ export const AuthContextProvider = ({ children }: IProps) => {
   ) => {
     const { email, password } = valueForm;
     try {
-     
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -119,7 +121,6 @@ export const AuthContextProvider = ({ children }: IProps) => {
     } catch (error) {
       setUser(undefined);
       setIsLoading("failed");
-      
     }
   };
 

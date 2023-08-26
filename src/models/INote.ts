@@ -12,3 +12,7 @@ export interface INoteFull{
     created_at:string,
     user_id:string
 }
+export interface IFormNote {
+    title: string;
+    description: string;
+  }

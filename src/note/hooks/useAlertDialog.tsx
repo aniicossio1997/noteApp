@@ -11,46 +11,66 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-
-interface IProps{
-isOpen:boolean,
-onConfirm:()=>void,
-onClose:()=>void,
-confirmationRef: React.MutableRefObject<HTMLButtonElement>
-onModalAction:()=>void
+interface IPropsContentModal {
+  title: string;
+  body: string;
+  btnYes: string;
+  btnNo: string;
 }
-export const DialogModal = ({confirmationRef,isOpen,onClose,onConfirm,onModalAction}:IProps) => {
+
+interface IProps {
+  isOpen: boolean;
+
+  onClose: () => void;
+  confirmationRef: React.MutableRefObject<HTMLButtonElement>;
+  onModalAction: () => void;
+  contentModal: IPropsContentModal;
+}
+export const DialogModal = ({
+  confirmationRef,
+  isOpen,
+  onClose,
+
+  onModalAction,
+  contentModal,
+}: IProps) => {
   const cancelRef = React.useRef(null);
-  const confirmation=()=>{
-    
-    onModalAction()
-    onClose()
-  }
+  const confirmation = () => {
+    onModalAction();
+    onClose();
+  };
   return (
     <>
-  
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
         onClose={onClose}
         isOpen={isOpen}
         closeOnOverlayClick={false}
+        
       >
-        <AlertDialogOverlay />
+        <AlertDialogOverlay background={"#0d0d26c4"}/>
 
-        <AlertDialogContent>
-          <AlertDialogHeader>Discard Changes?</AlertDialogHeader>
+        <AlertDialogContent borderWidth={1} borderRadius={"3px"} borderColor={"#3b313c82"}>
+          <AlertDialogHeader>{contentModal.title}</AlertDialogHeader>
           <AlertDialogCloseButton />
-          <AlertDialogBody>
-            Are you sure you want to discard all of your note
-          </AlertDialogBody>
+          <AlertDialogBody>{contentModal.body}</AlertDialogBody>
           <AlertDialogFooter>
             <HStack w={"100%"} justifyContent={"space-between"}>
-              <Button ref={cancelRef} onClick={onClose} id="close">
-                No
+              <Button ref={cancelRef} onClick={onClose} id="close" borderRadius={"3px"}>
+                {contentModal.btnNo}
               </Button>
-              <Button colorScheme="cyan" ml={3} onClick={confirmation} ref={confirmationRef} id="confirm">
-                Yes
+              <Button
+                colorScheme="cyan"
+               
+                m={0}
+                onClick={confirmation}
+                ref={confirmationRef}
+                id="confirm"
+                borderRadius={"3px"}
+         
+              >
+                {contentModal.btnYes}
               </Button>
             </HStack>
           </AlertDialogFooter>
@@ -61,32 +81,37 @@ export const DialogModal = ({confirmationRef,isOpen,onClose,onConfirm,onModalAct
 };
 
 export const useAlertDialog = () => {
-  
   const [isOpen, setIsOpen] = useState(false);
-
-  
+  const [contentModal, setContentModal] = useState<IPropsContentModal>({
+    body: "",
+    btnNo: "No",
+    btnYes: "yes",
+    title: "",
+  });
   const confirmationRef = React.useRef<HTMLButtonElement>(null);
-  
+
   const openCustonModal = () => {
-    
-    setIsOpen(true)
-   
-    
+    setIsOpen(true);
   };
-  const changeModal=()=> setIsOpen(!isOpen)
-  const handleClose=()=> setIsOpen(false)
-  const handleConfirm=()=>{
-    setIsOpen(false)
-  }
+  const changeModal = () => setIsOpen(!isOpen);
+  const handleClose = () => setIsOpen(false);
+
+  const initialContentModal = (contentModalProps: IPropsContentModal) => {
+    setContentModal(contentModalProps);
+  };
   return {
     openCustonModal,
-   
-    
-    isOpen,
+    initialContentModal,
     changeModal,
-   confirmationRef,
-   render: (onModalAction: () => void) => (
-      <DialogModal isOpen={isOpen} onConfirm={handleConfirm} onClose={handleClose} confirmationRef={confirmationRef} onModalAction={onModalAction} />
+    confirmationRef,
+    render: (onModalAction: () => void) => (
+      <DialogModal
+        isOpen={isOpen}
+        onClose={handleClose}
+        confirmationRef={confirmationRef}
+        onModalAction={onModalAction}
+        contentModal={contentModal}
+      />
     ),
   };
 };

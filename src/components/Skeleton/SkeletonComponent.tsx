@@ -7,8 +7,8 @@ export const SkeletonComponent = ({isLoading=true}:IProps) => {
   return (
     <>
      {
-      isLoading ?  <Stack>
-      <Skeleton height="18px" mb={2} />
+      isLoading ?  <Stack  zIndex={10}>
+      <Skeleton height="18px" mb={2}backgroundColor={"#ccc"} />
       <Skeleton height="18px" mb={2} />
       <Skeleton height="18px" mb={2} />
       <Skeleton height="18px" mb={2} />

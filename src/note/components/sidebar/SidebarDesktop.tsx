@@ -11,13 +11,14 @@ import {
   Text,
   Button,
   LinkProps,
+  VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { IconType } from "react-icons";
 import { AiOutlineFileText } from "react-icons/ai";
 import { UserAuth } from "../../../context/AuthContext";
 import { BsBoxArrowRight } from "react-icons/bs";
-import { Link as LinkRouter,  useLocation, useNavigate } from "react-router-dom";
+import { Link as LinkRouter, useLocation, useNavigate } from "react-router-dom";
 import { AddIcon } from "@chakra-ui/icons";
 
 import "./sidebar.css";
@@ -26,12 +27,12 @@ import { INote } from "../../../models/INote";
 import { SkeletonComponent } from "../../../components/Skeleton/SkeletonComponent";
 import { useAlertDialog } from "../../hooks/useAlertDialog";
 import { useNoteContext } from "../../../context/NoteContext";
+
 interface IPropsNavItem extends LinkProps {
   icon: IconType;
   title: string;
   active?: boolean;
   navSize: string;
- 
 }
 export const NavItem = ({
   icon,
@@ -50,15 +51,13 @@ export const NavItem = ({
       <Link
         backgroundColor={active && "rgb(135 131 131 / 40%)"}
         p={3}
-        borderRadius={8}
+        borderRadius={"3px"}
         _hover={{
           textDecor: "none",
           backgroundColor: "rgb(135 131 131 / 40%)",
         }}
         w={navSize == "large" && "100%"}
         {...rest}
-       
-        
       >
         <MenuButton w="100%">
           <Flex>
@@ -79,36 +78,34 @@ export const NavItem = ({
 
 interface IPropsSidebar {
   navSize: string;
- 
 }
 
 export const SidebarDesktop = ({ navSize }: IPropsSidebar) => {
   const { signOut, user } = UserAuth();
   const { pathname } = useLocation();
   const [idNote, setIdNote] = useState<string>("");
-  const { isLoading, data, isFetching ,isError} = useGetNotesByUserQuery(user.id);
-const  [noteNextId,setNoteNextId]=useState('')
+  const { isLoading, data, isFetching, isError } = useGetNotesByUserQuery(
+    user.id
+  );
+  const [noteNextId, setNoteNextId] = useState("");
   const [notes, setNotes] = useState<INote[]>([]);
   const useModal = useAlertDialog();
-  const { isDirtyForm,setIsDirtyForm}=useNoteContext()
-  const navigate=useNavigate();
+  const { isDirtyForm, setIsDirtyForm } = useNoteContext();
+  const navigate = useNavigate();
 
-const checkNoNote=(noteId:string)=>{
-  setNoteNextId(`/note/${noteId}`);
-  if (isDirtyForm) {
-    useModal.openCustonModal();
-  } else {
-    navigate(`/note/${noteId}`);
-  }
-console.log("desde sidebar: ",isDirtyForm)
-  
-}
+  const checkNoNote = (noteId: string) => {
+    setNoteNextId(`/note/${noteId}`);
+    if (isDirtyForm) {
+      useModal.openCustonModal();
+    } else {
+      navigate(`/note/${noteId}`);
+    }
+  };
 
-
-const changeRouter=()=>{
-  setIsDirtyForm(false)
-  navigate(noteNextId)
-}
+  const changeRouter = () => {
+    setIsDirtyForm(false);
+    navigate(noteNextId);
+  };
   useEffect(() => {
     const extractIdURL = (): string => {
       const parts = pathname.split("/note/");
@@ -125,13 +122,19 @@ const changeRouter=()=>{
     }
   }, [isLoading, isFetching, data]);
 
-  
+  useEffect(() => {
+    useModal.initialContentModal({
+      body: "Los cambios no se guardaran",
+      btnNo: "cancel",
+      btnYes: "Accept",
+      title: "¿Esta seguro de descartar los Cambios?",
+    });
+  }, []);
 
-
-  if(isError) return <div>ups hubo un error</div>
+  if (isError) return <div>ups hubo un error</div>;
   return (
     <>
-     {useModal.render(changeRouter)}
+      {useModal.render(changeRouter)}
       <Flex
         pos="sticky"
         left="0"
@@ -171,10 +174,6 @@ const changeRouter=()=>{
             >
               New note
             </Button>
-
-
-
-            {/* <BtnMenuSidebar aria-label="menu sidebar" /> */}
           </Flex>
 
           <Flex
@@ -185,22 +184,18 @@ const changeRouter=()=>{
             paddingRight={"8px"}
             className="scrollbar"
           >
-        
             <SkeletonComponent isLoading={isLoading} />
-            {notes.map((note) => (
-              <div  key={note.id}  onClick={()=>checkNoNote(note.id)}>
-                              <NavItem
-                
-               
-                navSize={navSize}
-                icon={AiOutlineFileText}
-                title={note.title}
-                active={note.id.toString() == idNote}
-               
-              />
-              </div>
-
-            ))}
+            {!isLoading &&
+              notes.map((note) => (
+                <div key={note.id} onClick={() => checkNoNote(note.id)}>
+                  <NavItem
+                    navSize={navSize}
+                    icon={AiOutlineFileText}
+                    title={note.title}
+                    active={note.id.toString() == idNote}
+                  />
+                </div>
+              ))}
           </Flex>
         </Flex>
 
@@ -214,7 +209,7 @@ const changeRouter=()=>{
           marginBottom={"calc(100vh - 244px)"}
         >
           <Divider display={"flex"} />
-          <Flex mt={4} flexDirection={"column"}>
+          <Flex mt={4} flexDirection={"column"} p={3}>
             <Flex
               transition={"all 0.1s"}
               flexDir="revert"
@@ -225,10 +220,33 @@ const changeRouter=()=>{
               display={"flex"}
               marginLeft={"-1px"}
             >
-              <Avatar bg="teal.500" />
-              <Heading as="h3" size="sm" className="text-break">
-                {user.email}
-              </Heading>
+              <Avatar
+                aria-hidden
+                size="sm"
+                name={`${user.full_name}`}
+                fontWeight={"extrabold"}
+                bg={"facebook.900"}
+              />
+              <VStack
+                gap={0}
+                alignContent={"start"}
+                justifyContent={"flex-start"}
+                alignItems={"flex-start"}
+              >
+                <Heading as="h3" size="sm" className="text-break" p={0}>
+                  {user.email}
+                </Heading>
+                <span
+                  style={{
+                    color: "rgb(174, 172, 172)",
+                    fontWeight: "700",
+                    fontSize: "0.7rem",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {user.full_name}{" "}
+                </span>
+              </VStack>
             </Flex>
             {navSize == "small" ? (
               <IconButton
@@ -242,11 +260,13 @@ const changeRouter=()=>{
               <Button
                 size="md"
                 width={"80px"}
+                h={"30px"}
                 paddingX={"0"}
                 mt={"10px"}
-                colorScheme="red"
+                bg={"#8b246f"}
                 onClick={signOut}
                 leftIcon={<Icon as={BsBoxArrowRight} />}
+                borderRadius={"3px"}
               >
                 Salir
               </Button>

@@ -8,7 +8,7 @@ export const NothingSelectedView = () => {
   
   return (
     <>
-    <Center width={"100%"}  flexDirection={"column"} h={{base:"80vh",md:"100vh"}} justifyContent={"center"} >
+    <Center width={"100%"}  flexDirection={"column"} h={{base:"80vh",md:"60vh"}} justifyContent={"center"} >
       <Link to={'/note/create'}>
       <Icon as={AiFillFileAdd} h={"4rem"} width={"4rem"}/>
       </Link>

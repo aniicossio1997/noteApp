@@ -32,7 +32,7 @@ interface IProps {
 type STATUS_SEND = "pedding" | "success" | "failed" | "none";
 
 interface IAuthContext {
-  signInWithGoogle: () => Promise<void>;
+  signInWithGoogle: () => void;
   signOut: () => Promise<void>;
   signInEmailPassword: (
     valueForm: ILogin,
@@ -46,10 +46,10 @@ interface IAuthContext {
 const initAuthContext: IAuthContext = {
   signInWithGoogle: async () => {},
   signOut: async () => {},
-  signInEmailPassword: async (valueForm, resetForm) => {},
+  signInEmailPassword: async () => {},
   user: undefined,
   isLoading: "none",
-  register: async (email:string, password:string) => {},
+  register: async () => {},
   resetIsLoading: () => {},
 };
 export const AuthContext = createContext(initAuthContext);
@@ -86,7 +86,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
   }
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    console.log("here, signout");
+    
     if (error) {
       throw new Error("A ocurrido un error durante el cierre de sesión");
     } else {
@@ -101,7 +101,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
   ) => {
     const { email, password } = valueForm;
     try {
-      console.log(valueForm);
+     
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -119,7 +119,7 @@ export const AuthContextProvider = ({ children }: IProps) => {
     } catch (error) {
       setUser(undefined);
       setIsLoading("failed");
-      console.log(error);
+      
     }
   };
 
